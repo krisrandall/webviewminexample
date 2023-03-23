@@ -501,7 +501,18 @@ class NavigationControls extends StatelessWidget {
         ),
         IconButton(
           icon: const Icon(Icons.replay),
-          onPressed: () => webViewController.reload(),
+          onPressed: () async {
+            
+            webViewController.reload();
+            // and run some JS
+            Object result;
+            try {
+              result = await webViewController.runJavaScriptReturningResult("console.log( 1 + 1 );");
+              print("Result: $result");
+            } catch (e) {
+              print("Error while evaluating JavaScript: $e");
+            }
+          },
         ),
       ],
     );
